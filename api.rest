@@ -1,0 +1,30 @@
+### Global Variables
+@baseUrl = http://localhost:3000/api
+
+### Check API Status
+GET http://localhost:3000/
+
+### User Signup
+POST {{baseUrl}}/auth/signup
+Content-Type: application/json
+
+{
+  "name": "Test User",
+  "email": "test@example.com",
+  "password": "password123"
+}
+
+### User Login
+# @name login
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "test@example.com",
+  "password": "password123"
+}
+
+### Get User Profile
+@authToken = {{login.response.body.data.token}}
+GET {{baseUrl}}/auth/profile
+Authorization: Bearer {{authToken}}
