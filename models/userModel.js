@@ -1,6 +1,6 @@
-const db = require('../config/db');
+import db from '../config/db.js';
 
-class User {
+export default class User {
   static async createTable() {
     const query = `
       CREATE TABLE IF NOT EXISTS users (
@@ -36,5 +36,3 @@ class User {
     return result.rows[0];
   }
 }
-
-module.exports = User;

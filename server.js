@@ -1,13 +1,16 @@
-const app = require('./app');
-require('dotenv').config();
+import dotenv from 'dotenv';
+import app from './app.js';
+dotenv.config();
 
-const User = require('./models/userModel');
+import ServiceRequest from './models/serviceRequestModel.js';
+import User from './models/userModel.js';
 
 const PORT = process.env.PORT || 3000;
 
 const startServer = async () => {
   try {
     await User.createTable();
+    await ServiceRequest.createTable();
     console.log('Tables created successfully (if they needed to be)');
     
     app.listen(PORT, () => {

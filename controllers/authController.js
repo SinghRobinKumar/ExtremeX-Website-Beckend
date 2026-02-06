@@ -1,7 +1,8 @@
-const User = require('../models/userModel');
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-require('dotenv').config();
+import bcrypt from 'bcrypt';
+import dotenv from 'dotenv';
+import jwt from 'jsonwebtoken';
+import User from '../models/userModel.js';
+dotenv.config();
 
 const generateToken = (user) => {
   return jwt.sign(
@@ -11,7 +12,7 @@ const generateToken = (user) => {
   );
 };
 
-exports.signup = async (req, res, next) => {
+export const signup = async (req, res, next) => {
   try {
     const { name, email, password } = req.body;
 
@@ -51,7 +52,7 @@ exports.signup = async (req, res, next) => {
   }
 };
 
-exports.login = async (req, res, next) => {
+export const login = async (req, res, next) => {
   try {
     const { email, password } = req.body;
 
@@ -95,7 +96,7 @@ exports.login = async (req, res, next) => {
   }
 };
 
-exports.getProfile = async (req, res, next) => {
+export const getProfile = async (req, res, next) => {
   try {
     // req.user is populated by middleware
     const user = await User.findById(req.user.id);
