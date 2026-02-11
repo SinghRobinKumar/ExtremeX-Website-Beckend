@@ -18,14 +18,23 @@ const login = async (req, res) => {
       return res.status(401).json({ message: 'Invalid credentials' });
     }
 
+    // Access token - short lived (e.g. 15m or 1h)
     const token = jwt.sign(
       { id: user.id, email: user.email, role: user.role_name },
       process.env.JWT_SECRET,
-      { expiresIn: '24h' }
+      { expiresIn: '1h' }
+    );
+
+    // Refresh token - long lived (e.g. 7 days)
+    const refreshToken = jwt.sign(
+        { id: user.id },
+        process.env.JWT_SECRET,
+        { expiresIn: '7d' }
     );
 
     res.json({
       token,
+      refreshToken,
       user: {
         id: user.id,
         name: user.name,
@@ -38,6 +47,34 @@ const login = async (req, res) => {
     console.error('Admin login error:', error);
     res.status(500).json({ message: 'Server error' });
   }
+};
+
+const refreshToken = async (req, res) => {
+    try {
+        const { refreshToken } = req.body;
+        if (!refreshToken) {
+            return res.status(400).json({ message: 'Refresh Token is required' });
+        }
+
+        const decoded = jwt.verify(refreshToken, process.env.JWT_SECRET);
+        const user = await AdminUser.findById(decoded.id);
+
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        const newToken = jwt.sign(
+            { id: user.id, email: user.email, role: user.role_name },
+            process.env.JWT_SECRET,
+            { expiresIn: '1h' }
+        );
+
+        res.json({ token: newToken });
+
+    } catch (error) {
+        console.error('Refresh token error:', error);
+        res.status(401).json({ message: 'Invalid Refresh Token' });
+    }
 };
 
 const getUsers = async (req, res) => {
@@ -145,5 +182,5 @@ const deleteUser = async (req, res) => {
   }
 };
 
-export { createRole, createUser, deleteUser, getAllRequests, getRoles, getUsers, login, updateRequest, updateUser };
+export { createRole, createUser, deleteUser, getAllRequests, getRoles, getUsers, login, refreshToken, updateRequest, updateUser };
 
