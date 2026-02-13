@@ -20,45 +20,12 @@ app.use(helmet({
   crossOriginResourcePolicy: { policy: "cross-origin" }
 }));
 
-const allowedOrigins = [
-  'http://localhost:3000',
-  'http://localhost:3001',
-  'https://extremex-admin.vercel.app',
-  "https://www.extremextechnology.com",
-  'https://extremex-website.vercel.app',
-  'https://extreme-x-website.vercel.app' 
-];
-
+// Allow all origins (permissive CORS)
 app.use(cors({
-  origin: function (origin, callback) {
-    if (!origin) return callback(null, true);
-    if (allowedOrigins.indexOf(origin) === -1) {
-
-       return callback(null, true); 
-    }
-    return callback(null, true);
-  },
+  origin: true,
   credentials: true
 }));
 
-
-app.use(cors({
-    origin: (origin, callback) => {
-        const allowed = [
-            'http://localhost:3000',
-            'http://localhost:3001',
-            'https://extremex-admin.vercel.app/',
-            'https://www.extremextechnology.com/',
-            'https://extreme-x-website.vercel.app'
-        ];
-        if (!origin || allowed.includes(origin)) {
-            callback(null, true);
-        } else {
-            callback(new Error('Not allowed by CORS'));
-        }
-    },
-    credentials: true
-}));
 app.use(express.json());
 
 // Serve static files from uploads directory
