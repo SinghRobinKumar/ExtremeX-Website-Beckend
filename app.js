@@ -24,8 +24,9 @@ const allowedOrigins = [
   'http://localhost:3000',
   'http://localhost:3001',
   'https://extremex-admin.vercel.app',
+  "https://www.extremextechnology.com",
   'https://extremex-website.vercel.app',
-  'https://extreme-x-website.vercel.app' // Adding potential variation
+  'https://extreme-x-website.vercel.app' 
 ];
 
 app.use(cors({
