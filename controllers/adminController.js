@@ -182,5 +182,38 @@ const deleteUser = async (req, res) => {
   }
 };
 
-export { createRole, createUser, deleteUser, getAllRequests, getRoles, getUsers, login, refreshToken, updateRequest, updateUser };
+const updateRole = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { name, permissions, description } = req.body;
+    const updatedRole = await Role.updateRole(id, name, permissions, description);
+    
+    if (!updatedRole) {
+      return res.status(404).json({ message: 'Role not found' });
+    }
+    
+    res.json(updatedRole);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
+const deleteRole = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const deletedRole = await Role.deleteRole(id);
+    
+    if (!deletedRole) {
+      return res.status(404).json({ message: 'Role not found' });
+    }
+    
+    res.json({ message: 'Role deleted successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
+export { createRole, createUser, deleteRole, deleteUser, getAllRequests, getRoles, getUsers, login, refreshToken, updateRequest, updateRole, updateUser };
 

@@ -35,4 +35,21 @@ export default class Role {
     const result = await db.query(query);
     return result.rows;
   }
+
+  static async updateRole(id, name, permissions, description) {
+    const query = `
+      UPDATE roles
+      SET name = $1, permissions = $2, description = $3
+      WHERE id = $4
+      RETURNING *;
+    `;
+    const result = await db.query(query, [name, JSON.stringify(permissions), description, id]);
+    return result.rows[0];
+  }
+
+  static async deleteRole(id) {
+    const query = 'DELETE FROM roles WHERE id = $1 RETURNING *';
+    const result = await db.query(query, [id]);
+    return result.rows[0];
+  }
 }

@@ -1,8 +1,10 @@
 ### Global Variables
-@baseUrl = http://localhost:3000/api
+@baseUrl = https://extreme-x-website-beckend.vercel.app/api
+# @baseUrl = http://localhost:3000/api
+
 
 ### Check API Status
-GET http://localhost:3000/
+GET http://localhost:3001/
 
 ### User Signup
 POST {{baseUrl}}/auth/signup

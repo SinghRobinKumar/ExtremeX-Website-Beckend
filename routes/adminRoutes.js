@@ -1,5 +1,5 @@
 import express from 'express';
-import { createRole, createUser, deleteUser, getAllRequests, getRoles, getUsers, login, refreshToken, updateRequest, updateUser } from '../controllers/adminController.js';
+import { createRole, createUser, deleteRole, deleteUser, getAllRequests, getRoles, getUsers, login, refreshToken, updateRequest, updateRole, updateUser } from '../controllers/adminController.js';
 import { authenticateAdmin, authorize } from '../middleware/adminAuthMiddleware.js';
 const router = express.Router();
 
@@ -15,6 +15,8 @@ router.delete('/users/:id', authenticateAdmin, authorize('manage_users'), delete
 
 router.get('/roles', authenticateAdmin, authorize('manage_roles'), getRoles);
 router.post('/roles', authenticateAdmin, authorize('manage_roles'), createRole);
+router.put('/roles/:id', authenticateAdmin, authorize('manage_roles'), updateRole);
+router.delete('/roles/:id', authenticateAdmin, authorize('manage_roles'), deleteRole);
 
 router.get('/requests', authenticateAdmin, authorize('manage_requests'), getAllRequests);
 router.put('/requests/:id', authenticateAdmin, authorize('manage_requests'), updateRequest);
