@@ -8,6 +8,7 @@ import adminRoutes from './routes/adminRoutes.js';
 import authRoutes from './routes/authRoutes.js';
 import serviceRequestRoutes from './routes/serviceRequestRoutes.js';
 import serviceRoutes from './routes/serviceRoutes.js';
+import themeRoutes from './routes/themeRoutes.js';
 import uploadRoutes from './routes/uploadRoutes.js';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -36,6 +37,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/service-requests', serviceRequestRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/services', serviceRoutes);
+app.use('/api/themes', themeRoutes);
 app.use('/api/upload', uploadRoutes);
 
 app.get('/', (req, res) => {

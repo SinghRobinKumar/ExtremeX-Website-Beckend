@@ -30,3 +30,60 @@ Content-Type: application/json
 @authToken = {{login.response.body.data.token}}
 GET {{baseUrl}}/auth/profile
 Authorization: Bearer {{authToken}}
+
+###################################################
+# THEME API ENDPOINTS
+###################################################
+
+### Get Active Theme (Public - No Auth Required)
+GET {{baseUrl}}/themes/active
+
+### Get All Themes (Admin Only)
+GET {{baseUrl}}/themes
+Authorization: Bearer {{authToken}}
+
+### Get Theme By ID (Admin Only)
+GET {{baseUrl}}/themes/1
+Authorization: Bearer {{authToken}}
+
+### Create Custom Theme (Admin Only)
+POST {{baseUrl}}/themes
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+  "name": "My Custom Theme",
+  "colors": {
+    "primary": "#FF5733",
+    "accent": "#33FF57",
+    "background": "#0A0A0A",
+    "backgroundLight": "#1A1A1A",
+    "textGradientStart": "#FFD700",
+    "textGradientEnd": "#FF5733"
+  }
+}
+
+### Update Theme (Admin Only)
+PUT {{baseUrl}}/themes/1
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+  "name": "Updated Theme Name",
+  "colors": {
+    "primary": "#71DAF2",
+    "accent": "#4074AA",
+    "background": "#000000",
+    "backgroundLight": "#2E3045",
+    "textGradientStart": "#B48674",
+    "textGradientEnd": "#71DAF2"
+  }
+}
+
+### Set Active Theme (Admin Only)
+PUT {{baseUrl}}/themes/2/activate
+Authorization: Bearer {{authToken}}
+
+### Delete Theme (Admin Only)
+DELETE {{baseUrl}}/themes/5
+Authorization: Bearer {{authToken}}
