@@ -6,8 +6,10 @@ import { fileURLToPath } from 'url';
 import errorHandler from './middleware/errorHandler.js';
 import adminRoutes from './routes/adminRoutes.js';
 import authRoutes from './routes/authRoutes.js';
+import projectRoutes from './routes/projectRoutes.js';
 import serviceRequestRoutes from './routes/serviceRequestRoutes.js';
 import serviceRoutes from './routes/serviceRoutes.js';
+import teamRoutes from './routes/teamRoutes.js';
 import themeRoutes from './routes/themeRoutes.js';
 import uploadRoutes from './routes/uploadRoutes.js';
 
@@ -38,6 +40,8 @@ app.use('/api/service-requests', serviceRequestRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/services', serviceRoutes);
 app.use('/api/themes', themeRoutes);
+app.use('/api/projects', projectRoutes);
+app.use('/api/team', teamRoutes);
 app.use('/api/upload', uploadRoutes);
 
 app.get('/', (req, res) => {
