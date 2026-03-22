@@ -14,10 +14,16 @@ const generateToken = (user) => {
 
 export const signup = async (req, res, next) => {
   try {
-    const { name, email, password } = req.body;
+    const { name, email, password, dob, phone, newsletter_opt_in, terms_accepted } = req.body;
 
-    if (!name || !email || !password) {
+    if (!name || !email || !password || !dob || !phone) {
       const error = new Error('Please provide all required fields');
+      error.statusCode = 400;
+      throw error;
+    }
+
+    if (!terms_accepted) {
+      const error = new Error('You must agree to the terms and conditions');
       error.statusCode = 400;
       throw error;
     }
@@ -35,7 +41,15 @@ export const signup = async (req, res, next) => {
     const hashedPassword = await bcrypt.hash(password, salt);
 
     // Create user
-    const newUser = await User.createUser(name, email, hashedPassword);
+    const newUser = await User.createUser(
+      name,
+      email,
+      hashedPassword,
+      dob,
+      phone,
+      newsletter_opt_in === true || newsletter_opt_in === 'true',
+      terms_accepted === true || terms_accepted === 'true'
+    );
 
     // Generate token
     const token = generateToken(newUser);
