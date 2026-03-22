@@ -1,26 +1,60 @@
-import ServiceRequest from '../models/serviceRequestModel.js';
+import ServiceRequest from "../models/serviceRequestModel.js";
 
 const createRequest = async (req, res) => {
   try {
-    const { serviceName, companyName, projectDetails } = req.body;
+    const {
+      serviceName,
+      serviceIcon,
+      companyName,
+      companyOrigin,
+      companyAddress,
+      companyScale,
+      hasDecisionRights,
+      userRole,
+      companyWebAddress,
+      companyContactEmail,
+      companyContactNumber,
+      agreedToTerms,
+      serviceType,
+      servicePlan,
+      projectName,
+      projectType,
+    } = req.body;
     const userId = req.user.id;
-    console.log(req.body)
+    console.log(req.body);
 
-    if (!serviceName || !companyName || !projectDetails) {
-      return res.status(400).json({ message: 'Please fix all fields' });
+    if (!serviceName || !companyName || !projectName) {
+      return res
+        .status(400)
+        .json({ message: "Please fix all required fields" });
     }
 
     const request = await ServiceRequest.createRequest({
       userId,
       serviceName,
+      serviceIcon,
       companyName,
-      projectDetails
+      companyOrigin,
+      companyAddress,
+      companyScale,
+      hasDecisionRights,
+      userRole,
+      companyWebAddress,
+      companyContactEmail,
+      companyContactNumber,
+      agreedToTerms,
+      serviceType,
+      servicePlan,
+      projectName,
+      projectType,
     });
 
-    res.status(201).json({ message: 'Service request created successfully', request });
+    res
+      .status(201)
+      .json({ message: "Service request created successfully", request });
   } catch (error) {
-    console.error('Error creating service request:', error);
-    res.status(500).json({ message: 'Server error' });
+    console.error("Error creating service request:", error);
+    res.status(500).json({ message: "Server error" });
   }
 };
 
@@ -30,8 +64,8 @@ const getUserRequests = async (req, res) => {
     const requests = await ServiceRequest.findByUserId(userId);
     res.json(requests);
   } catch (error) {
-    console.error('Error fetching user requests:', error);
-    res.status(500).json({ message: 'Server error' });
+    console.error("Error fetching user requests:", error);
+    res.status(500).json({ message: "Server error" });
   }
 };
 

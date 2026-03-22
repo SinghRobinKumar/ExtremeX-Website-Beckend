@@ -4,7 +4,6 @@ import {
   deleteService,
   getAllServices,
   getServiceById,
-  getServiceBySlug,
   updateService
 } from '../controllers/serviceController.js';
 import { authenticateAdmin, authorize } from '../middleware/adminAuthMiddleware.js';
@@ -13,7 +12,6 @@ const router = express.Router();
 
 // Public Routes
 router.get('/', getAllServices);
-router.get('/slug/:slug', getServiceBySlug);
 router.get('/:id', getServiceById);
 
 // Protected Admin Routes
